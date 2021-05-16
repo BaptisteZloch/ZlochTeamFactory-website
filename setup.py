@@ -7,5 +7,4 @@ setup(
    author='Baptiste Zloch',
    author_email='baptiste.zloch@epfedu.fr',
    packages=['ZlochTeamFactory_Website'],  #same as name
-   install_requires=['wheel', 'bar', 'greek'], #external packages as dependencies
 )
