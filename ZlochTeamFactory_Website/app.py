@@ -6,8 +6,13 @@ import mysql.connector
 
 app = Flask(__name__, static_folder="static")
 
+host = 'lmc8ixkebgaq22lo.chr7pe7iynqr.eu-west-1.rds.amazonaws.com'
+username='rfnw78zju18x3b4i'
+password ='pmgjyf7r74tvnosc'
+database ='bxh5i89l7u1i58td'
+
 mydb = mysql.connector.connect(
-    host='localhost', user='root', password='', database='ztf_website')
+    host=host, user=username, password=password, database=database)
 cur = mydb.cursor()
 
 app.config['isAuth'] = False
