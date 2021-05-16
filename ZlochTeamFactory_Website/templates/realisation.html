@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}{{realisation["Titre_realisation"]}}{% endblock %}
+{% block content %}
+
+<div style="margin-left: 5%;margin-right: 5%;">
+    <br>
+    <br>
+    <a href="{{url_for('realisations')}}" class="btn btn-primary" style=" background-color: #4D94BC;
+            color: white;">
+        << Retour</a>
+            <br>
+            <h1 style='text-align: center;'>{{realisation["Titre_realisation"]}}</h1>
+            <br>
+            <br>
+            <p style='text-align: justify;'>
+                Description de l'oeuvre : {{realisation["Description_realisation"]}}
+                <br>
+                Matière : {{realisation["Matiere"]}}<br>
+                Dimensions : {{realisation["Dimensions"]}} cm<br>
+                Prix : {{realisation["Prix"]}} cm<br>
+            </p>
+            <h4>Quelques photos de l'oeuvre :</h4>
+            <br>
+            <div class="row justify-content-md-center">
+                {% for photo in realisation["Photos"] %}
+
+                <img style="object-fit: cover;width: 50%;height: 60%;" src="{{url_for('static', filename=photo)}}"
+                    alt="{{realisation[ID_realisation]}}">
+                {% endfor %}
+            </div>
+            <br>
+            <p style="margin-left: 5%; font-size: x-small;">
+                tags :
+                {% for Tag in realisation["Tags"] %}
+                <a id='a{{Tag[0]}}'>
+                    <span class="w3-round-xlarge tags">{{Tag}}</span>
+                </a>
+                <script>
+                    $('#a{{Tag[0]}}').click(() => {
+                        $.get("/tags", {
+                            tag: '{{Tag[0]}}'
+                        });
+                    })
+                </script>{% endfor %}
+            </p>
+            <br>
+            <br>
+</div>
+
+
+{% endblock %}

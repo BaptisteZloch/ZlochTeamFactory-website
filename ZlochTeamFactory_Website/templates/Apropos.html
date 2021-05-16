@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}A propos{% endblock %}
+
+{% block content %}
+
+<div style="margin-left: 5%;margin-right: 5%;">
+    <br>
+    <h2 style="text-align: center;">ZLOCH TEAM FACTORY</h2>
+    <br>
+
+    <table>
+        <tr>
+            <td style="width: 10%;"><img src="{{url_for('static', filename='ChristopheZLOCH.png')}}"></td>
+            <td>
+                <p style="text-align: justify;">Ce site est dédié au partage de mes activités artistiques. Ces activités
+                    sont
+                    l'utilisation de différentes machines
+                    comme une fraiseuse CNC, une imprimante 3D, ou encore un laser.<br>Je m'appelle Christophe Zloch je
+                    suis
+                    architecte
+                    sibel chez Oracle Consulting depuis 11ans. J'ai depuis toujours été passioné par les machines
+                    complexes.
+                    Quant à
+                    mon
+                    attrait artistique il me vient de mon père lui même artiste en son temps.<br>
+                    Pour ZlochTeamFactory, ce nom vient d'une part des nombreuses activités que je fais en collaboration
+                    avec
+                    mon
+                    fils
+                    comme l'astronomie, la decouverte de technologie, l'IOT... D'où ZlochTeam, et Factory vient du fait
+                    que
+                    l'acitivité
+                    principale de ce site est la fabrication et la création d'objets. Il existe aussi ZlochTeamAstro. Ce
+                    site
+                    créé
+                    gentiment par mon fils
+                    Baptiste Zloch permet donc de partager cette passion qui m'anime. Je partagerai ici des photos de
+                    mes
+                    créations,
+                    des conseils ainsi que des articles sur ce que je fais et comment je le fais. N'hésitez pas à me
+                    contacter via la
+                    section contact pour échanger sur le sujet.
+                </p>
+            </td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

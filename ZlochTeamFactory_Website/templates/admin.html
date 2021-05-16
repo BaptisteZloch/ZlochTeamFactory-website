@@ -1,0 +1,397 @@
+{% extends 'base.html' %}
+{% block title %}Adminitration{% endblock %}
+{% block content %}
+{% if isAuth==True %}
+<div class="w3-bar" style='background-color: #4D94BC; '>
+    <button id="Articles" class="w3-button w3-bar-item" style="color: white;">Ecrire article</button>
+    <button id="Articles_suppr" class="w3-button w3-bar-item" style="color: white;">Supprimer article</button>
+    <button id="Articles_modif" class="w3-button w3-bar-item" style="color: white;">Modifier article</button>
+    <button id="Realisations" class="w3-button w3-bar-item" style="color: white;">Ajouter réalisation</button>
+    <button id="realisation_suppr" class="w3-button w3-bar-item" style="color: white;">Supprimer réalisation</button>
+    <button id="realisation_modif" class="w3-button w3-bar-item" style="color: white;">Modifier réalisation</button>
+</div>
+
+<div id="Article_redact" style="margin-left: 5%;margin-right: 5%;">
+    <br>
+    <br>
+    <h2>Ajout d'un article :</h2>
+    <br>
+    <form method="GET" action="/NewArticle">
+        <label class="input-field col s12">Titre de l'article :<input name="article_titre" class="form-control"
+                type="text" required placeholder="Titre de l'article..."></label><br>
+        <label class="input-field col s12">Contenu de l'article :<input name="article_texte" class="form-control"
+                type="text" required style="height: 10rem;" placeholder="Contenu de l'article..."></label><br>
+        <label class="input-field col s12">Date de l'article :<input name="article_date" class="form-control"
+                type="date" required placeholder="date de l'article..."></label><br>
+        <label class="input-field col s12">Auteur de l'article : <select name="article_auteur" class="form-control"
+                required>
+                <option selected disabled>
+                    --Selectionnez l'Auteur
+                </option>
+                <option value="Baptiste Zloch">
+                    Baptiste ZLOCH
+                </option>
+                <option value="Véronique Zloch">
+                    Véronique ZLOCH
+                </option>
+                <option value="Christophe Zloch">
+                    Christophe ZLOCH
+                </option>
+            </select></label>
+        <br>
+        <hr class="solid">
+
+        <label class="input-field col s12">
+            <p style="text-align: center;">Upload image :</p>
+            <br>
+            <div class="file-upload-wrapper" style="margin-left: 39%;">
+                <!--<input type="file" id="input-file-now" class="file-upload" name="image[]" id='file' accept="image/*"
+                    multiple />-->
+                <input type="file" id="photos_articles" name="files[]" multiple="multiple" accept="image/*" required />
+
+            </div>
+        </label>
+
+        <br>
+        <hr class="solid">
+        <br>
+        <label class="input-field col s12" style="text-align: center;">Choisissez des tags :<br><br><select multiple
+                name="tags[]">
+                <option value="" disabled selected> --Choisissez des tags</option>
+                {% for tag in tags %}
+                <option value="{{tag[0]}}">{{tag[1]}}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <br><br>
+        <button class="btn btn-default" id='upload_article'
+            style="margin-left: 48%; background-color: #4D94BC; color: white;" class="w3-button">Envoyer</button>
+    </form>
+    <br>
+</div>
+<div id="realisation_ajout" style="display: none; margin-left: 5%;margin-right: 5%;">
+    <br>
+    <br>
+    <h2>Ajout d'une réalisation :</h2>
+    <br>
+    <form method="GET" action="/NewRealisation">
+        <label class="input-field col s12">Titre de la réalisation :<input name="titre_rea" class="form-control"
+                type="text" required placeholder="Titre de la réalisation..."></label><br>
+        <label class="input-field col s12">Description de la réalisation :<textarea name="description_rea"
+                class="form-control" type="text" required style="height: 10rem;"
+                placeholder="Description de la réalisation..."></textarea> </label><br>
+        <label class="input-field col s12">Date de la création :<input name="date_rea" class="form-control" type="date"
+                required placeholder="date de la création..."></label><br>
+        <label class="input-field col s12">Couleur : <select name="couleur_rea[]" class="form-control" multiple
+                required>
+                <option selected disabled>
+                    --Selectionnez une/des couleur(s)
+                </option>
+                <option value="Doré">
+                    Doré
+                </option>
+                <option value="Bronze">
+                    Bronze
+                </option>
+                <option value="Noir">
+                    Noir
+                </option>
+                <option value="Blanc">
+                    Blanc
+                </option>
+                <option value="Marbre">
+                    Marbre
+                </option>
+                <option value="Cuivre">
+                    Cuivre
+                </option>
+                <option value="Bois">
+                    Bois
+                </option>
+                <option value="Ardoise">
+                    Ardoise
+                </option>
+                <option value="Gris">
+                    Gris
+                </option>
+                <option value="Violet">
+                    Violet
+                </option>
+                <option value="Jaune">
+                    Jaune
+                </option>
+                <option value="Argenté">
+                    Argenté
+                </option>
+                <option value="Transparent">
+                    Transparent
+                </option>
+                <option value="Bleu">
+                    Bleu
+                </option>
+                <option value="Vert">
+                    Vert
+                </option>
+                <option value="Marron">
+                    Marron
+                </option>
+                <option value="Orange">
+                    Orange
+                </option>
+            </select></label>
+
+        <label class="input-field col s12">Matériaux : <select name="materiaux[]" class="form-control" multiple
+                required>
+                <option selected disabled>
+                    --Selectionnez une/des matériau(x)
+                </option>
+                <option value="PLA">
+                    PLA
+                </option>
+                <option value="PETG">
+                    PETG
+                </option>
+                <option value="TPU">
+                    TPU
+                </option>
+                <option value="Ardoise">
+                    Ardoise
+                </option>
+                <option value="Chêne">
+                    Chêne
+                </option>
+                <option value="Hetre">
+                    Hetre
+                </option>
+                <option value="Aggloméré">
+                    Aggloméré
+                </option>
+                <option value="Boulot">
+                    Boulot
+                </option>
+                <option value="Plexiglass">
+                    Plexiglass
+                </option>
+                <option value="Cuir">
+                    Cuir
+                </option>
+                <option value="Papier">
+                    Papier
+                </option>
+                <option value="Aluminium">
+                    Aluminium
+                </option>
+                <option value="Fibre de carbone">
+                    Fibre de carbone
+                </option>
+                <option value="ABS">
+                    ABS
+                </option>
+            </select></label>
+        <label class="input-field col s12 form-inline">
+            <p>Dimensions (cm) : &nbsp;</p><input name="dim_x" class="form-control" min="0" type="number" step='0.1' required
+                placeholder="Dimension en x">&nbsp; x &nbsp;<input name="dim_y" class="form-control"  step='0.1' type="number"
+                min="0" required placeholder="Dimension en y">&nbsp; x &nbsp;<input name="dim_z" step='0.1' class="form-control"
+                type="number" min="0" required placeholder="Dimension en z">&nbsp; cm
+        </label>
+        <br>
+
+        <label class="input-field col s12">Prix :<input name="prix_rea" class="form-control" type="number" step='0.1' min="0"
+                required placeholder="Prix de la réalisation..."></label><br>
+        <hr class="solid">
+
+
+        <label class="input-field col s12">
+            <p style="text-align: center;">Upload image :</p>
+            <br>
+            <div class="file-upload-wrapper" style="margin-left: 39%;">
+                <!--<input type="file" id="input-file-now" class="file-upload" name="image[]" id='file' accept="image/*"
+                    multiple />-->
+                <input type="file" id="file_realisation" name="files_rea[]" multiple="multiple" accept="image/*"
+                    required multiple />
+
+            </div>
+        </label>
+
+        <br>
+        <hr class="solid">
+        <br>
+        <label class="input-field col s12" style="text-align: center;">Choisissez des tags :<br><br><select multiple
+                name="tags[]">
+                <option value="" disabled selected> --Choisissez des tags</option>
+                {% for tag in tags %}
+                <option value="{{tag[0]}}">{{tag[1]}}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <br><br>
+        <button id='upload_rea' class="btn btn-default" style="margin-left: 48%; background-color: #4D94BC; color: white;"
+            class="w3-button">Envoyer</button>
+    </form>
+    <br>
+</div>
+<div id="realisation_suppression" style="display: none; margin-left: 5%;margin-right: 5%;text-align: center;">
+    <br>
+    <br>
+    <form method="POST" action="/SupressionRealisation">
+        <label class="input-field col s12" style="text-align: center;">
+            <h2>Choisissez la réalisation à supprimer :</h2>
+            <br><br><select name="realisation" class="form-control" style="width: 40%;" required>
+                <option value="" disabled selected> --Choisissez la réalisation</option>
+                {% for realisation in realisations %}
+                <option value="{{realisation[0]}}">{{realisation[0]}} - {{realisation[1]}}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <br><br>
+        <button class="btn btn-default" style="background-color: #4D94BC; color: white;"
+            class="w3-button">Supprimer</button>
+        <br>
+        <br>
+    </form>
+</div>
+<div id="realisation_modification" style="display: none; margin-left: 5%;margin-right: 5%;text-align: center;">
+
+</div>
+<div id="article_suppression" style="display: none; margin-left: 5%;margin-right: 5%;text-align: center;"> <br>
+    <br>
+    <form method="POST" action="/SuppressionArticle">
+        <label class="input-field col s12" style="text-align: center;">
+            <h2>Choisissez l'article à supprimer :</h2>
+            <br><br><select name="article_to_suppr" class="form-control" style="width: 40%;" required>
+                <option value="" disabled selected> --Choisissez l'article</option>
+                {% for article in articles %}
+                <option value="{{article[0]}}">{{article[4]}} - {{article[1]}}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <br><br>
+        <button class="btn btn-default" style="background-color: #4D94BC; color: white;"
+            class="w3-button">Supprimer</button>
+        <br>
+        <br>
+    </form>
+</div>
+
+<div id="article_modification" style="display: none; margin-left: 5%;margin-right: 5%;">
+
+
+    <button id="upload" style="margin-left: 48%; background-color: #4D94BC; color: white;"
+        class="w3-button btn btn-default">Upload</button>
+</div>
+<script>
+    document.getElementById('Articles').addEventListener('click', () => {
+        document.getElementById('Article_redact').style.display = 'block';
+        document.getElementById('realisation_ajout').style.display = 'none';
+        document.getElementById('realisation_suppression').style.display = 'none';
+        document.getElementById('realisation_modification').style.display = 'none';
+        document.getElementById('article_suppression').style.display = 'none';
+        document.getElementById('article_modification').style.display = 'none';
+    });
+    document.getElementById('Realisations').addEventListener('click', () => {
+        document.getElementById('Article_redact').style.display = 'none';
+        document.getElementById('realisation_ajout').style.display = 'block';
+        document.getElementById('realisation_suppression').style.display = 'none';
+        document.getElementById('realisation_modification').style.display = 'none';
+        document.getElementById('article_suppression').style.display = 'none';
+        document.getElementById('article_modification').style.display = 'none';
+    });
+    document.getElementById('realisation_suppr').addEventListener('click', () => {
+        document.getElementById('Article_redact').style.display = 'none';
+        document.getElementById('realisation_ajout').style.display = 'none';
+        document.getElementById('realisation_suppression').style.display = 'block';
+        document.getElementById('realisation_modification').style.display = 'none';
+        document.getElementById('article_suppression').style.display = 'none';
+        document.getElementById('article_modification').style.display = 'none';
+    });
+    document.getElementById('Articles_suppr').addEventListener('click', () => {
+        document.getElementById('Article_redact').style.display = 'none';
+        document.getElementById('realisation_ajout').style.display = 'none';
+        document.getElementById('realisation_suppression').style.display = 'none';
+        document.getElementById('realisation_modification').style.display = 'none';
+        document.getElementById('article_suppression').style.display = 'block';
+        document.getElementById('article_modification').style.display = 'none';
+    });
+    document.getElementById('realisation_modif').addEventListener('click', () => {
+        document.getElementById('Article_redact').style.display = 'none';
+        document.getElementById('realisation_ajout').style.display = 'none';
+        document.getElementById('realisation_suppression').style.display = 'none';
+        document.getElementById('realisation_modification').style.display = 'block';
+        document.getElementById('article_suppression').style.display = 'none';
+        document.getElementById('article_modification').style.display = 'none';
+    });
+    document.getElementById('Articles_modif').addEventListener('click', () => {
+        document.getElementById('Article_redact').style.display = 'none';
+        document.getElementById('realisation_ajout').style.display = 'none';
+        document.getElementById('realisation_suppression').style.display = 'none';
+        document.getElementById('realisation_modification').style.display = 'none';
+        document.getElementById('article_suppression').style.display = 'none';
+        document.getElementById('article_modification').style.display = 'block';
+    });
+
+    $(document).ready(function (e) {
+        $('#upload_article').on('click', function () {
+            var form_data = new FormData();
+            var ins = document.getElementById('photos_articles').files.length;
+            if (ins == 0) {
+                $('#msg').html('<span style="color:red">Select at least one file</span>');
+                return;
+            }
+            for (var x = 0; x < ins; x++) {
+                form_data.append("files[]", document.getElementById('photos_articles').files[x]);
+            }
+            $.ajax({
+                url: 'upload_image_article', // point to server-side URL
+                dataType: 'json', // what to expect back from server
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: 'post',
+                success: function (response) {
+                    $.each(response, function (key, data) {
+                        console.log(key + ' : ' + data);
+                    })
+                },
+                error: function (response) {
+                    console.log(response.message);
+                }
+            });
+        });
+
+        $('#upload_rea').on('click', function () {
+            var form_data = new FormData();
+            var ins = document.getElementById('file_realisation').files.length;
+            if (ins == 0) {
+                $('#msg').html('<span style="color:red">Select at least one file</span>');
+                return;
+            }
+            for (var x = 0; x < ins; x++) {
+                form_data.append("files_rea[]", document.getElementById('file_realisation').files[x]);
+            }
+            $.ajax({
+                url: 'upload_image_realisation', // point to server-side URL
+                dataType: 'json', // what to expect back from server
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: 'post',
+                success: function (response) {
+                    $.each(response, function (key, data) {
+                        console.log(key + ' : ' + data);
+                    })
+                },
+                error: function (response) {
+                    console.log(response.message);
+                }
+            });
+        });
+    });
+</script>
+{% else %}
+<h1 style="text-align:center;">Erreur vous n'êtes pas administrateur...</h1>
+{% endif %}
+{% endblock %}

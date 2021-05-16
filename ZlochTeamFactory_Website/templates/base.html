@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Zloch Team Factory &mdash; {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,600,400italic,700' rel='stylesheet' type='text/css'>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/e42db4ad67.js" crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+    
+    <link rel="icon" href="{{url_for('static', filename='favicon.png')}}" type="image/png" />
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('dropdown-toggle').dropdown();
+        });
+    </script>
+
+    <style>
+        .txt-article {
+            text-align: justify;
+            margin-left: 5%;
+            text-indent: 2%;
+            padding: 1%;
+        }
+
+        .foot-article {
+            margin-left: 5%;
+        }
+
+        hr.solid {
+            border-top: 3px solid #bbb;
+        }
+
+        .RS-logo {
+            filter: invert(1);
+        }
+
+        .headers {
+            font-size: large;
+        }
+
+        p {
+            font-family: "Gill Sans Extrabold", sans-serif;
+        }
+
+        
+
+        .tags {
+            background-color: #4D94BC;
+            color: white;
+            padding: 5px;
+            font-style: italic;
+            font-size: x-small;
+        }
+
+        .VP-btn {
+            position: absolute;
+            top: 80%;
+            left: 46%;
+            background-color: #4D94BC;
+            color: white;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 75%;
+            height: 15px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4D94BC;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4D94BC;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        $(document).ready(() => {
+            $('#connexion').click(() => {
+                if ($("#mdp_connect").val() != null && (/w*\d*[@]\w*\d*[.]\w*/).test($("#mail_connect").val())) {
+                    $.post('/admin',
+                        {
+                            mail: $("#mail_connect").val(),
+                            mdp: $("#mdp_connect").val()
+                        });
+                } else {
+                    alert('Erreur mot de passe ou adresse mail invalide !')
+                }
+            });
+        });
+    </script>
+    {% endblock %}
+</head>
+
+<body style="background-color: #c8af98;">
+    <header>
+        <div>
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #404040;">
+                <a class="navbar-brand" href="/"><img src="{{url_for('static', filename='Logo.png')}}"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/" style="color: #fff;">
+                                <p class="headers">Actualité</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: #fff;" href="/Realisations">
+                                <p class="headers">Réalisations</p>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle headers" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff;">
+                                Techniques
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/Techniques/Laser">Laser</a>
+                                <a class="dropdown-item" href="/Techniques/CNC">Fraisage</a>
+                                <!--<div class="dropdown-divider"></div>-->
+                                <a class="dropdown-item" href="/Techniques/Impression3D">Impression 3D</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: #fff;" href="/Apropos">
+                                <p class="headers">A propos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: #fff;" href="/Contact">
+                                <p class="headers">Contact</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0" action="/admin" method="GET">
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email" id="mail_connect">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" id="mdp_connect"
+                                autocomplete="current-password">
+                        </div>
+                        <button id="connexion" class="btn btn-default" style='background-color: #4D94BC;
+                        color: white;'>Sign in</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" style="background-color: #fff;padding: 0%;">
+        {% block content %} {% endblock %}
+    </div>
+
+    <footer class="text-center text-white" style="background-color: #404040;">
+        <div class="container p-4">
+            <section class="mb-4 ">
+                <a class="btn btn-floating m-1 RS-logo" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
+
+                <a class="btn btn-floating m-1 RS-logo" href="#!" role="button"><i class="fab fa-instagram"></i></a>
+
+                <a class="btn btn-floating m-1 RS-logo" href="https://www.youtube.com/channel/UCwdjWt8kU_1DCtktakvhhgg"
+                    role="button"><i class="fab fa-youtube"></i></a>
+
+                <a class="btn btn-floating m-1 RS-logo" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
+
+                <a class="btn btn-floating m-1 RS-logo" href="https://github.com/zlochteamfactory?tab=repositories"
+                    role="button"><i class="fab fa-github"></i></a>
+            </section>
+
+            <section class="mb-4">
+                <p>
+                    Ce site est à vocation artistique.
+                </p>
+            </section>
+
+            <section class="">
+                <!--Grid row-->
+                <div class="row justify-content-md-center">
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Astronomie</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="http://www.zlochteamastro.com" class="text-white">Gallerie photo</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/c/ZLOCHTEAMASTRO" class="text-white">Chaîne YouTube</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white">Exposition virutelle</a>
+                            </li>
+                            <li>
+                                <a href="https://www.galleryastro.fr/-/galleries/auteurs/zloch-team"
+                                    class="text-white">Vente de tirages</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5>MakeIT</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC_z_SHFipTRltrwM6T_KsFg"
+                                    class="text-white">Chaîne Youtube</a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/BaptisteZloch?tab=repositories"
+                                    class="text-white">Repositories</a>
+                            </li>
+                            <li>
+                                <a href="https://www.kaggle.com/baptistezloch" class="text-white">Datasets</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright :
+            <a class="text-white" href="https://www.zlocteamfactory.com.com/"> www.zlocteamfactory.com</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

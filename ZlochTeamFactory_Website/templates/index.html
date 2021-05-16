@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}Actualité{% endblock %}
+{% block content %}
+<style>
+    .mySlides {
+        display: none;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 15vw;
+        object-fit: cover;
+    }
+
+    .slideshowtext {
+        position: absolute;
+        color: white;
+        top: 7%;
+        left: 10%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+</style>
+
+<div class="w3-content w3-display-container">
+    <!--w3-content w3-display-container-->
+    <div class="mySlides"><img src="{{url_for('static', filename='CNC.JPG')}}" style="width:100%;height: 100%">
+        <a href="/Techniques/CNC" class="w3-btn w3-round-xlarge VP-btn">Voir plus</a>
+        <h1 class="slideshowtext">Gravure CNC</h1>
+    </div>
+    <div class="mySlides"><img src="{{url_for('static', filename='laser.JPG')}}" style="width:100%;height: 100%">
+        <a href="/Techniques/Laser" class="w3-btn w3-round-xlarge VP-btn">Voir plus</a>
+        <h1 class="slideshowtext">Gravure laser</h1>
+    </div>
+    <div class="mySlides"><img src="{{url_for('static', filename='3D.JPG')}}" style="width:100%;height: 100%">
+        <a href="/Techniques/Impression3D" class="w3-btn w3-round-xlarge VP-btn">Voir plus</a>
+        <h1 class="slideshowtext">Impression 3D</h1>
+
+    </div>
+
+    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+</div>
+
+<script>
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        if (n > x.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = x.length }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        x[slideIndex - 1].style.display = "block";
+    }
+
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > x.length) { slideIndex = 1 }
+        x[slideIndex - 1].style.display = "block";
+        setTimeout(carousel, 5000);
+    }
+</script>
+
+<br>
+<br>
+<hr class="solid">
+<br>
+<h1 style="text-align: center;">Actualité</h1>
+<br>
+{% for article in articles %}
+<section style="margin-left: 5%;margin-right: 5%;">
+    <article class="card">
+        {% if photos[article[0]] %}
+        <a href="{{url_for('article_unitaire',article_id=article[0])}}"><img class="card-img-top"
+                src="../static/Articles/{{photos[article[0]]}}" alt="{{article[1]}}"></a>
+        {% endif %}
+        <h3 class='card-header'>{{article[1]}}</h3>
+        <br>
+        <p class="txt-article card-text">{{article[2][0:150]}}... <a
+                href="{{url_for('article_unitaire',article_id=article[0])}}">Lire la suite -></a></p>
+        <p class="blockquote-footer foot-article">Posté le {{article[4]}}, par <cite
+                title="Source Title">{{article[3]}}</cite></p>
+        <p style="margin-left: 5%; font-size: x-small;">
+            tags :
+            {% for singletag in tags[article[0]] %}
+            <a id='a{{singletag[0]}}'>
+                <span class="w3-round-xlarge tags">{{singletag[1]}}</span>
+            </a>
+            <script>
+                $('#a{{singletag[0]}}').click(() => {
+                    $.get("/tags", {
+                        tag: '{{singletag[0]}}'
+                    });
+                })
+            </script>{% endfor %}
+        </p>
+    </article>
+    <br>
+</section>
+{% endfor %}
+{% endblock %}

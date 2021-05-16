@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Réalisations{% endblock %}
+{% block content%}
+<!--<section>
+    <h1>Filter : </h1>
+    <input type="range" min="1" max="200" value="50" class="slider" id="myRange2">
+    <br>
+    <br>-->
+</section>
+<section class="row justify-content-md-center">
+    {% for row in rows %}
+    <div class="card text-center" style="width: 18rem;">
+        <img class="card-img-top" style="object-fit: cover;width: 100%;height: 60%;" src="{{url_for('static', filename=photos[row[0]])}}" alt="{{row[1]}}">
+        <div class="card-body">
+            <h5 class="card-title" style="text-align: center;">{{row[1]}}</h5>
+            <p class="card-text">
+            <ul style="text-align: left;">
+                <li>Matière : {{row[4]}}</li>
+                <li>Prix : {{row[6]}} €</li>
+                <li>Dimensions : {{row[5]}} cm</li>
+            </ul>
+            </p>
+            <a href="{{url_for('realisation',realisation_id=row[0])}}" class="btn btn-primary" style=" background-color: #4D94BC;
+            color: white;">Voir plus</a>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

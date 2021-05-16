@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<h1 style="text-align: center;">Contactez-nous</h1>
+<br>
+
+<form method="POST" action="/Message" class="text-align:center;">
+    <div class="row" style='margin-left: 5%;margin-right: 5%;'>
+        <div class="col-lg justify-content-md-center align-items-center">
+            <label>Prénom : <input name="prenom" id="prenom" class="form-control" type="text" style="width: 30em;" required
+                    placeholder="Votre prénom..."><span id="erreur_prenom" style="color: red;display: none;">Entrez un
+                    prénom valide !</span></label>
+            <br>
+            <label>Nom : <input name="nom" id="nom" class="form-control" type="text" required placeholder="Votre nom..." style="width: 30em;"><span
+                    id="erreur_nom" style="color: red;display: none;">Entrez un nom valide !</span></label>
+            <br>
+            <label>Adresse mail : <input name="email" id="adrmail"  required class="form-control" type="email" style="width: 30em;"
+                    placeholder="xyz@exemple.com"><span id="erreur_adrmail" style="color: red;display: none;">Entrez une
+                    adresse mail valide !</span></label>
+            <br>
+        </div>
+        <div class="col-lg justify-content-md-center">
+            <label>Objet : <input name="objet" id="objet" required class="form-control" type="text" style="width: 30em;"
+                    placeholder="Objet du mail..."></label>
+            <br>
+            <label>Texte : <textarea name="mail" id="mail" required class="form-control" type="" placeholder="Texte du mail..." style="width: 30em;height: 7em;"
+                    ></textarea></label>
+        </div>
+    </div>
+    <br><br><button id='submit_btn' style="margin-left: 46%; background-color: #4D94BC; color: white;"
+        class="w3-button">Envoyer !</button>
+</form>
+
+<br>
+<script>
+    function verification(id_input, id_erreur, regexp) {
+        document.getElementById(id_input).addEventListener('keypress', () => {
+            const regex = regexp;
+            if (regex.test(document.getElementById(id_input).value)) {
+                document.getElementById(id_erreur).style.display = "block";
+                document.getElementById('submit_btn').disabled = true;
+            } else {
+                document.getElementById(id_erreur).style.display = "none";
+                document.getElementById('submit_btn').disabled = false;
+            }
+        });
+    }
+    verification('nom', 'erreur_nom', /\d/);
+    verification('prenom', 'erreur_prenom', /\d/);
+
+    document.getElementById('adrmail').addEventListener('keypress', () => {
+        const regex = /w*\d*[@]\w*\d*[.]\w*/;
+        if (regex.test(document.getElementById('adrmail').value)) {
+            document.getElementById('erreur_adrmail').style.display = "none";
+            document.getElementById('submit_btn').disabled = false;
+        } else {
+            document.getElementById('erreur_adrmail').style.display = "block";
+            document.getElementById('submit_btn').disabled = true;
+        }
+    });
+</script>
+{% endblock %}

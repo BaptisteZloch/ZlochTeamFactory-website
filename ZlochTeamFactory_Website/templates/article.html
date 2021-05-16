@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{article["Titre_article"]}}{% endblock %}
+{% block content %}
+<div style="margin-left: 5%;margin-right: 5%;">
+    <br>
+    <br>
+    <a href="{{url_for('index')}}" class="btn btn-primary" style=" background-color: #4D94BC;
+            color: white;">
+        << Actualité</a>
+            <br>
+            <br>
+            <h1 style='text-align: center;'>{{article["Titre_article"]}}</h1>
+            <br>
+            <br>
+            <p style='text-align: justify;'>
+                Description de l'oeuvre : {{article["Texte_article"]}}
+                <br>
+                <br>
+                Auteur : {{article["Auteur_article"]}}<br>
+                Date de parution : {{article["Date_article"]}}<br>
+            </p>
+            {% if article["Photos"]%}
+            <h4>Quelques photos sur l'article :</h4>
+            <br>
+            <div class="row justify-content-md-center">
+                {% for photo in article["Photos"] %}
+
+                <img style="object-fit: cover;width: 50%;height: 60%;" src="../static/Articles/{{photo}}"
+                    alt="{{article[ID_article]}}">
+                {% endfor %}
+            </div>
+            <br>
+            {% endif %}
+            <p style="margin-left: 5%; font-size: x-small;">
+                tags :
+                {% for Tag in article["Tags"] %}
+                <a id='a{{Tag[0]}}'>
+                    <span class="w3-round-xlarge tags">{{Tag}}</span>
+                </a>
+                <script>
+                    $('#a{{Tag[0]}}').click(() => {
+                        $.get("/tags", {
+                            tag: '{{Tag[0]}}'
+                        });
+                    })
+                </script>{% endfor %}
+            </p>
+            <br>
+            <br>
+</div>
+
+{% endblock %}
