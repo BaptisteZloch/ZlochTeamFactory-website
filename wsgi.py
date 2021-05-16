@@ -1,4 +1,1 @@
-from ZlochTeamFactory_Website import app
-
-if __name__ == "__main__":
-    app.run()
+web: gunicorn wsgi:app
